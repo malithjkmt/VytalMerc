@@ -5,15 +5,20 @@
  */
 
 import React from 'react';
-import { SafeAreaView, StatusBar, Text } from 'react-native';
+import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { NavRouter } from './navigation/NavRouter';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
-      <Text style={{ color: 'white', textAlign: 'center' }}>VytalMerc</Text>
+      <NavRouter />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { backgroundColor: 'white', flex: 1 },
+});
 
 export default App;
