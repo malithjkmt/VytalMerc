@@ -6,14 +6,19 @@
 
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
+
+import { store } from './redux/store';
 import { NavRouter } from './navigation/NavRouter';
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
-      <NavRouter />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="dark-content" />
+        <NavRouter />
+      </SafeAreaView>
+    </Provider>
   );
 }
 
