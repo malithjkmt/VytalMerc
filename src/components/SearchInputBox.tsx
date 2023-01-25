@@ -5,14 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 interface SearchInputBoxProps {
   placeholder: string;
   isDummy?: boolean;
-  onChangeQuery?: (q: string) => string;
+  onSubmit?: (q: string) => void;
 }
 
-export const SearchInputBox: FC<SearchInputBoxProps> = ({
-  placeholder,
-  isDummy,
-  onChangeQuery,
-}) => {
+export const SearchInputBox: FC<SearchInputBoxProps> = ({ placeholder, isDummy, onSubmit }) => {
   const navigation = useNavigation();
   const [query, setQuery] = useState<string>('');
 
@@ -24,6 +20,10 @@ export const SearchInputBox: FC<SearchInputBoxProps> = ({
 
   const onClearInput = () => {
     setQuery('');
+  };
+
+  const onSubmitEditing = ({ nativeEvent: { text } }) => {
+    onSubmit && onSubmit(text);
   };
 
   if (isDummy) {
@@ -48,6 +48,7 @@ export const SearchInputBox: FC<SearchInputBoxProps> = ({
           placeholderTextColor="#444"
           style={styles.inputBox}
           onChangeText={setQuery}
+          onSubmitEditing={onSubmitEditing}
         />
         <TouchableOpacity style={styles.clearTextButton} onPress={onClearInput}>
           <Text>X</Text>

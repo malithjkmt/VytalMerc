@@ -5,10 +5,14 @@ import { SearchScreenProps } from '../../navigation/NavRouter';
 import { SearchInputBox } from '../../components';
 
 const SearchScreen = ({ }: SearchScreenProps) => {
+  const onSearch = (query: string) => {
+    console.log(query);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchBoxContainer}>
-        <SearchInputBox placeholder="Search Shop" />
+        <SearchInputBox placeholder="Search Shop" onSubmit={onSearch} />
       </View>
     </View>
   );
