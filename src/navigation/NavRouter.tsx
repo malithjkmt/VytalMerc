@@ -27,12 +27,12 @@ const NavRouter: FC = () => {
         <Stack.Screen
           name="ResultsScreen"
           component={ResultsScreen}
-          options={{ headerShown: true, animation: 'slide_from_right' }}
+          options={{ title: 'VytalMerc', headerShown: false }}
         />
         <Stack.Screen
           name="SearchScreen"
           component={SearchScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false, animation: 'none' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

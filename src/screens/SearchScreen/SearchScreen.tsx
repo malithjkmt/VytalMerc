@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { SearchScreenProps } from '../../navigation/NavRouter';
+import { SearchInputBox } from '../../components';
 
-const SearchScreen = ({ navigation }: SearchScreenProps) => {
+const SearchScreen = ({ }: SearchScreenProps) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={navigation.goBack}>
-        <Text>goBack</Text>
-      </TouchableOpacity>
+      <View style={styles.searchBoxContainer}>
+        <SearchInputBox placeholder="Search Shop" />
+      </View>
     </View>
   );
 };
@@ -16,8 +17,11 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+  searchBoxContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
   },
 });
 
