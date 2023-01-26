@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from './store';
 
 interface SearchQueryState {
-  currentSearchQuery: null | string;
+  currentSearchQuery: string;
   searchQueryHistory: Array<string>;
 }
 
 const initialState: SearchQueryState = {
-  currentSearchQuery: null,
+  currentSearchQuery: '',
   searchQueryHistory: [],
 };
 
@@ -15,14 +15,19 @@ export const searchQuerySlice = createSlice({
   name: 'searchQuery',
   initialState,
   reducers: {
-    saveQuery: (state: SearchQueryState, action: PayloadAction<string>) => {
+    setQuery: (state: SearchQueryState, action: PayloadAction<string>) => {
       state.currentSearchQuery = action.payload;
-      state.searchQueryHistory.push(action.payload);
+    },
+    addToHistory: (state: SearchQueryState, action: PayloadAction<string>) => {
+      state.searchQueryHistory.unshift(action.payload);
+    },
+    clearQuery: (state: SearchQueryState) => {
+      state.currentSearchQuery = '';
     },
   },
 });
 
-export const { saveQuery } = searchQuerySlice.actions;
+export const { setQuery, addToHistory, clearQuery } = searchQuerySlice.actions;
 
 export const selectCurrentSearchQuery = (state: RootState) => state.searchQuery.currentSearchQuery;
 export const selectSearchQueryHistory = (state: RootState) => state.searchQuery.searchQueryHistory;

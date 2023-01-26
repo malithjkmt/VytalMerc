@@ -4,72 +4,66 @@ import { useNavigation } from '@react-navigation/native';
 
 interface SearchInputBoxProps {
   placeholder: string;
-  isDummy?: boolean;
-  onSubmit?: (q: string) => void;
+  defaultValue: string;
+  onSubmit: (q: string) => void;
+  onClear: () => void;
 }
 
-export const SearchInputBox: FC<SearchInputBoxProps> = ({ placeholder, isDummy, onSubmit }) => {
+export const SearchInputBox: FC<SearchInputBoxProps> = ({
+  placeholder,
+  defaultValue,
+  onSubmit,
+  onClear,
+}) => {
   const navigation = useNavigation();
-  const [query, setQuery] = useState<string>('');
-
-  const onPress = () => {
-    if (isDummy) {
-      navigation.navigate('SearchScreen');
-    }
-  };
+  const [query, setQuery] = useState<string>(defaultValue || '');
 
   const onClearInput = () => {
     setQuery('');
+    onClear();
   };
 
   const onSubmitEditing = ({ nativeEvent: { text } }) => {
-    onSubmit && onSubmit(text);
+    if (text) {
+      onSubmit && onSubmit(text);
+    }
   };
 
-  if (isDummy) {
-    return (
-      <TouchableOpacity style={styles.commonContainer} onPress={onPress}>
-        <Text style={styles.dummyPlaceholder}>{placeholder}</Text>
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.closeButton} onPress={navigation.goBack}>
+        <Text>{'<'}</Text>
       </TouchableOpacity>
-    );
-  } else {
-    return (
-      <View style={styles.commonContainer}>
-        <TouchableOpacity style={styles.closeButton} onPress={navigation.goBack}>
-          <Text>{'<'}</Text>
-        </TouchableOpacity>
-        <TextInput
-          autoFocus={true}
-          keyboardAppearance="light"
-          value={query}
-          allowFontScaling={false}
-          maxFontSizeMultiplier={1.1}
-          placeholder={placeholder}
-          placeholderTextColor="#444"
-          style={styles.inputBox}
-          onChangeText={setQuery}
-          onSubmitEditing={onSubmitEditing}
-        />
-        <TouchableOpacity style={styles.clearTextButton} onPress={onClearInput}>
-          <Text>X</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+      <TextInput
+        autoFocus={true}
+        keyboardAppearance="light"
+        value={query}
+        allowFontScaling={false}
+        maxFontSizeMultiplier={1.1}
+        placeholder={placeholder}
+        placeholderTextColor="#444"
+        style={styles.inputBox}
+        onChangeText={setQuery}
+        onSubmitEditing={onSubmitEditing}
+        returnKeyType="search"
+        enablesReturnKeyAutomatically={true}
+      />
+      <TouchableOpacity style={styles.clearTextButton} onPress={onClearInput}>
+        <Text>X</Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  commonContainer: {
+  container: {
     flex: 1,
     height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#c9c9c9',
     borderRadius: 30,
-  },
-  dummyPlaceholder: {
-    paddingLeft: 30,
   },
   inputBox: {
     flex: 1,

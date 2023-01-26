@@ -1,24 +1,19 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 
+import { useAppSelector } from '../../redux/hooks';
 import { useFetchMerchantsQuery } from '../../redux/dcomApi';
+import { selectCurrentSearchQuery } from '../../redux/searchQuerySlice';
 
 import { ResultsScreenProps } from '../../navigation/NavRouter';
-import { SearchInputBox } from '../../components';
 
 const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
-  const { data, isError, isSuccess, error, isFetching, isLoading, requestId, fulfilledTimeStamp } = useFetchMerchantsQuery('240_kent_ave_11249');
+  const currentSearchQuery = useAppSelector(selectCurrentSearchQuery);
+  console.log('currentSearchQuery: ', currentSearchQuery);
 
-  console.log('data fetching: ', {
-    data,
-    error,
-    isError,
-    isSuccess,
-    isLoading,
-    requestId,
-    fulfilledTimeStamp,
-    isFetching,
-  });
+  const res = useFetchMerchantsQuery(currentSearchQuery, { skip: currentSearchQuery === '' });
+  console.log(res);
+  const { data, isError, isSuccess, error, isFetching, isLoading, requestId, fulfilledTimeStamp, originalArgs, refresh } = res;
 
   const renderRestaurantCard = ({ item }) => {
     return (
@@ -28,16 +23,26 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
     );
   };
 
+  const dummyTextColor = currentSearchQuery ? 'black' : 'gray';
+
   return (
     <View style={styles.container}>
-      <View style={styles.searchBoxContainer}>
-        <SearchInputBox isDummy={true} placeholder="Search Shop" />
-      </View>
-
       <FlatList
+        ListHeaderComponent={
+          <TouchableOpacity
+            style={styles.searchBoxContainer}
+            onPress={() => navigation.navigate('SearchScreen')}>
+            <Text style={[styles.searchBoxText, { color: dummyTextColor }]}>
+              {currentSearchQuery || 'Search Shop'}
+            </Text>
+          </TouchableOpacity>
+        }
         data={data?.merchants}
         keyExtractor={item => item.id}
         renderItem={renderRestaurantCard}
+        refreshing={isFetching || isLoading}
+        onRefresh={refresh}
+        progressViewOffset={200}
       />
     </View>
   );
@@ -46,11 +51,19 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
   },
   searchBoxContainer: {
+    flex: 1,
+    height: 50,
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 30,
+    marginHorizontal: 10,
+  },
+  searchBoxText: {
+    paddingLeft: 30,
   },
 });
 
