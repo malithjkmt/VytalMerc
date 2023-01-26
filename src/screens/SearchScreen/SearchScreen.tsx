@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
@@ -9,33 +9,56 @@ import {
   addToHistory,
   clearQuery,
 } from '../../redux/searchQuerySlice';
+import {
+  parseAddressInput,
+  ParsingError,
+  ParsedAddress,
+  COMMON_ADDRESS_VALIDATION_MESSAGE,
+} from '../../utils/addressParser';
 
 import { SearchScreenProps } from '../../navigation/NavRouter';
 import { SearchInputBox, HistoryItem } from '../../components';
 
 const SearchScreen = ({ navigation }: SearchScreenProps) => {
   const dispatch = useAppDispatch();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const searchHistory = useAppSelector(selectSearchQueryHistory);
   const currentSearchQuery = useAppSelector(selectCurrentSearchQuery);
   console.log(searchHistory);
 
-  const onSearch = (query: string) => {
-    console.log(query);
-    dispatch(setQuery(query));
+  const onSearch = (searchTerm: string) => {
+    try {
+      const parsedAddress = parseAddressInput(searchTerm);
 
-    if (!searchHistory.includes(query)) {
-      dispatch(addToHistory(query));
+      setErrorMessage('');
+      dispatch(setQuery(parsedAddress));
+
+      const hasRecentlySearched = searchHistory.some(
+        i => i.addressQuery === parsedAddress.addressQuery,
+      );
+
+      if (!hasRecentlySearched) {
+        dispatch(addToHistory(parsedAddress));
+      }
+
+      navigation.goBack();
+    } catch (err) {
+      if (err instanceof ParsingError) {
+        console.log(err.message);
+        setErrorMessage(err.message);
+      } else {
+        console.log(COMMON_ADDRESS_VALIDATION_MESSAGE);
+        setErrorMessage(COMMON_ADDRESS_VALIDATION_MESSAGE);
+      }
     }
-
-    navigation.goBack();
   };
 
   const onClear = () => {
     dispatch(clearQuery());
   };
 
-  const onSelectRecentSearch = (query: string) => {
+  const onSelectRecentSearch = (query: ParsedAddress) => {
     dispatch(setQuery(query));
     navigation.goBack();
   };
@@ -45,18 +68,22 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
       <View style={styles.searchBoxContainer}>
         <SearchInputBox
           placeholder="Search Shop"
-          defaultValue={currentSearchQuery}
+          defaultValue={currentSearchQuery?.addressText || ''}
           onSubmit={onSearch}
           onClear={onClear}
         />
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.sectionTitle}>Recent Searches</Text>
-        {searchHistory.map(query => (
-          <HistoryItem label={query} onPress={() => onSelectRecentSearch(query)} />
-        ))}
-      </ScrollView>
+      {errorMessage ? (
+        <Text>{errorMessage}</Text>
+      ) : (
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+          <Text style={styles.sectionTitle}>Recent Searches</Text>
+          {searchHistory.map(query => (
+            <HistoryItem label={query.addressText} onPress={() => onSelectRecentSearch(query)} />
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 };

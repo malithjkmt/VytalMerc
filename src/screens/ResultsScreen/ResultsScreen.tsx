@@ -11,7 +11,10 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
   const currentSearchQuery = useAppSelector(selectCurrentSearchQuery);
   console.log('currentSearchQuery: ', currentSearchQuery);
 
-  const res = useFetchMerchantsQuery(currentSearchQuery, { skip: currentSearchQuery === '' });
+  const res = useFetchMerchantsQuery(currentSearchQuery?.addressQuery || '', {
+    skip: currentSearchQuery === null,
+  });
+
   console.log(res);
   const { data, isError, isSuccess, error, isFetching, isLoading, requestId, fulfilledTimeStamp, originalArgs, refresh } = res;
 
@@ -33,9 +36,14 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
             style={styles.searchBoxContainer}
             onPress={() => navigation.navigate('SearchScreen')}>
             <Text style={[styles.searchBoxText, { color: dummyTextColor }]}>
-              {currentSearchQuery || 'Search Shop'}
+              {currentSearchQuery?.addressText || 'Search Shop'}
             </Text>
           </TouchableOpacity>
+        }
+        ListEmptyComponent={
+          <View>
+            <Text>No shops found!</Text>
+          </View>
         }
         data={data?.merchants}
         keyExtractor={item => item.id}
