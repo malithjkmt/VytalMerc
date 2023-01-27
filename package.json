@@ -1,6 +1,6 @@
 {
   "name": "VytalMerc",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -9,7 +9,7 @@
     "start": "react-native start",
     "test": "jest",
     "android:reconnect": "adb reverse tcp:8081 tcp:8081",
-    "np": "np --no-tests --branch main"
+    "np": "np --no-tests --branch dev"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
