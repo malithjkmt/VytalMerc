@@ -1,5 +1,13 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Share,
+  Platform,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import { theme } from '../styles/theme';
@@ -16,8 +24,24 @@ export const ResultCard: FC<ResultCardProps> = ({
   location,
   cuisines,
 }) => {
-  const onShare = () => {
+  const onShare = async () => {
     console.log(link);
+
+    try {
+      await Share.share({
+        message: 'Checkout this restaurant on VytalMerc',
+        ...Platform.select({
+          ios: {
+            url: link,
+          },
+          android: {
+            title: 'Share Restaurant',
+          },
+        }),
+      });
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
