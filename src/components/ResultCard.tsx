@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { theme } from '../styles/theme';
 import { Shop } from '../utils/types';
@@ -21,7 +22,14 @@ export const ResultCard: FC<ResultCardProps> = ({
 
   return (
     <View style={styles.card}>
-      <Image source={{ uri: logo }} style={styles.logo} />
+      <FastImage
+        style={styles.logo}
+        source={{
+          uri: logo,
+          priority: FastImage.priority.normal,
+        }}
+        resizeMode={FastImage.resizeMode.contain}
+      />
       <View style={styles.column}>
         <View style={styles.row}>
           <View style={styles.nameStarColumn}>
