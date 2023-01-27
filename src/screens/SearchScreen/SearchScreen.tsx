@@ -77,14 +77,18 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
 
       {errorMessage ? (
         <Text style={styles.errorMessageText}>{errorMessage}</Text>
-      ) : (
+      ) : searchHistory.length > 0 ? (
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.sectionTitle}>Recent Searches</Text>
           {searchHistory.map(query => (
-            <HistoryItem label={query.addressText} onPress={() => onSelectRecentSearch(query)} />
+            <HistoryItem
+              key={query.addressQuery}
+              label={query.addressText}
+              onPress={() => onSelectRecentSearch(query)}
+            />
           ))}
         </ScrollView>
-      )}
+      ) : null}
     </View>
   );
 };
@@ -100,6 +104,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     marginBottom: 50,
     backgroundColor: 'white',
+    paddingBottom: 20,
   },
   sectionTitle: {
     marginLeft: 25,

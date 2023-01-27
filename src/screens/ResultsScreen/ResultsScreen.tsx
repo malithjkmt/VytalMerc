@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchBoxText: {
-    paddingLeft: 45,
+    paddingLeft: 30,
   },
   emptyListMessage: {
     textAlign: 'center',

@@ -34,7 +34,7 @@ export const SearchInputBox: FC<SearchInputBoxProps> = ({
 
   return (
     <View style={commonStyles.searchBox}>
-      <TouchableOpacity style={styles.closeButton} onPress={navigation.goBack}>
+      <TouchableOpacity style={styles.backButton} onPress={navigation.goBack}>
         <Image style={styles.backIcon} source={Icons.backIcon} />
       </TouchableOpacity>
       <TextInput
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     flexDirection: 'row',
-    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#c9c9c9',
     borderRadius: 30,
@@ -77,11 +76,9 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingLeft: 0,
   },
-  closeButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  backButton: {
     paddingLeft: 10,
-    paddingRight: 15,
+    paddingRight: 10,
   },
   clearTextButton: {
     height: '100%',
@@ -90,7 +87,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   backIcon: {
-    width: 20,
+    width: 10,
     height: 20,
     tintColor: '#444',
   },

@@ -74,10 +74,8 @@ export const ResultCard: FC<ResultCardProps> = ({
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cuisinesRow}>
           {cuisines.map(i => (
-            <View style={styles.cuisineTag}>
-              <Text key={i} style={styles.cuisinesText}>
-                {i}
-              </Text>
+            <View key={i} style={styles.cuisineTag}>
+              <Text style={styles.cuisinesText}>{i}</Text>
             </View>
           ))}
         </ScrollView>
