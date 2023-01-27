@@ -36,7 +36,7 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
 
       {isError ? (
         <Text style={commonStyles.errorMessageText}>
-          {status === 'rejected' && 'Please enter a valid address'}
+          {status === 'rejected' && 'Please enter a supported address'}
         </Text>
       ) : (
         <FlatList
