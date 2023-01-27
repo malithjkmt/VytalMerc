@@ -25,7 +25,7 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
     return <ResultCard {...item} />;
   };
 
-  const dummyTextColor = currentSearchQuery ? 'black' : 'gray';
+  const dummyTextColor = currentSearchQuery ? 'black' : '#666';
 
   return (
     <View style={styles.container}>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchBoxText: {
-    paddingLeft: 30,
+    paddingLeft: 45,
   },
   emptyListMessage: {
     textAlign: 'center',
