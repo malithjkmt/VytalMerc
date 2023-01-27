@@ -49,7 +49,12 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
           renderItem={renderRestaurantCard}
           progressViewOffset={200}
           refreshControl={
-            <RefreshControl refreshing={isFetching || isLoading} onRefresh={refetch} />
+            <RefreshControl
+              refreshing={isFetching || isLoading}
+              onRefresh={refetch}
+              tintColor="gray"
+              colors={['gray']}
+            />
           }
         />
       )}

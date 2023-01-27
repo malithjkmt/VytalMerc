@@ -35,7 +35,8 @@ export const ResultCard: FC<ResultCardProps> = ({
             url: link,
           },
           android: {
-            title: 'Share Restaurant',
+            title: 'VytalMerc Restaurant',
+            message: 'Checkout this restaurant on VytalMerc\n\n' + link,
           },
         }),
       });

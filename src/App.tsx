@@ -15,7 +15,7 @@ function App(): JSX.Element {
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="dark-content" backgroundColor="white" />
         <NavRouter />
       </SafeAreaView>
     </Provider>

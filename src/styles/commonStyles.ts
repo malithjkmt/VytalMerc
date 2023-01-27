@@ -13,6 +13,7 @@ export const commonStyles = StyleSheet.create({
   searchBoxContainer: {
     flexDirection: 'row',
     backgroundColor: 'white',
+    paddingTop: 5,
     paddingBottom: 10,
     paddingHorizontal: 10,
     shadowOffset: { width: 0, height: 0 },
