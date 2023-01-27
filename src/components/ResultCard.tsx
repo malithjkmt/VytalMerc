@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nameStarColumn: {
-    flex: 4,
+    flex: 3,
   },
   shareColumn: {
     flex: 1,

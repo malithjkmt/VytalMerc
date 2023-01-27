@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
 
 import { useAppSelector } from '../../redux/hooks';
@@ -8,8 +8,7 @@ import { Shop } from '../../utils/types';
 
 import { ResultsScreenProps } from '../../navigation/NavRouter';
 import { commonStyles } from '../../styles/commonStyles';
-import { theme } from '../../styles/theme';
-import { ResultCard } from '../../components';
+import { ResultCard, ListEmptyComp } from '../../components';
 
 const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
   const currentSearchQuery = useAppSelector(selectCurrentSearchQuery);
@@ -19,7 +18,7 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
     skip: currentSearchQuery === null,
   });
 
-  const { data: shops, isError, error, isFetching, isLoading, refetch } = res;
+  const { data: shops, isError, error, isFetching, isLoading, refetch, status } = res;
 
   const renderRestaurantCard = ({ item }: { item: Shop }) => {
     return <ResultCard {...item} />;
@@ -40,14 +39,21 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
       </View>
 
       {isError ? (
-        <Text style={styles.errorMessageText}>{JSON.stringify(error)}</Text>
+        <Text style={styles.errorMessageText}>
+          {status === 'rejected' && 'Please enter a valid address'}
+        </Text>
       ) : (
         <FlatList
-          ListEmptyComponent={<Text style={styles.emptyListMessage}>No shops found!</Text>}
+          ListEmptyComponent={
+            <ListEmptyComp
+              message={currentSearchQuery && !isFetching && !isLoading && 'No shops found'}
+            />
+          }
           data={shops}
           keyExtractor={item => item.id.toString()}
           renderItem={renderRestaurantCard}
           progressViewOffset={200}
+          refreshing={isFetching || isLoading}
           refreshControl={
             <RefreshControl
               refreshing={isFetching || isLoading}
@@ -68,11 +74,6 @@ const styles = StyleSheet.create({
   },
   searchBoxText: {
     paddingLeft: 30,
-  },
-  emptyListMessage: {
-    textAlign: 'center',
-    marginTop: 50,
-    color: theme.colors.lowText,
   },
   errorMessageText: {
     paddingHorizontal: 50,

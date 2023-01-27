@@ -78,9 +78,12 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
       {errorMessage ? (
         <Text style={styles.errorMessageText}>{errorMessage}</Text>
       ) : searchHistory.length > 0 ? (
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled">
           <Text style={styles.sectionTitle}>Recent Searches</Text>
-          {searchHistory.map(query => (
+          {searchHistory.map((query: ParsedAddress) => (
             <HistoryItem
               key={query.addressQuery}
               label={query.addressText}
