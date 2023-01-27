@@ -7,18 +7,21 @@
 import React from 'react';
 import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import { store } from './redux/store';
+import { store, persistor } from './redux/store';
 import { NavRouter } from './navigation/NavRouter';
 
 function App(): JSX.Element {
   return (
-    <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor="white" />
-        <NavRouter />
-      </SafeAreaView>
-    </Provider>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <NavRouter />
+        </PersistGate>
+      </Provider>
+    </SafeAreaView>
   );
 }
 

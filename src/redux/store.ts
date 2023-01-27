@@ -1,8 +1,27 @@
+import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { dcomApi } from '../services/api/dcomApi';
 import searchQueryReducer from './searchQuerySlice';
+
+const getPersistConfig = (reducerName: string) => {
+  return {
+    key: `redux_offline_store/${reducerName}`,
+    storage: AsyncStorage,
+  };
+};
 
 const assembleMiddleware = () => {
   console.log('assembling middleware...');
@@ -32,17 +51,26 @@ const assembleMiddleware = () => {
   return middleware;
 };
 
+const rootReducer = combineReducers({
+  [dcomApi.reducerPath]: dcomApi.reducer,
+  searchQuery: searchQueryReducer,
+});
+
 export const store = configureStore({
-  reducer: {
-    [dcomApi.reducerPath]: dcomApi.reducer,
-    searchQuery: searchQueryReducer,
-  },
+  reducer: persistReducer(getPersistConfig('root'), rootReducer),
   // Adding the api middleware enables caching, invalidation, polling, and other useful features of `rtk-query`.
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(assembleMiddleware()),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(assembleMiddleware()),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
 setupListeners(store.dispatch);
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
