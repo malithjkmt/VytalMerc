@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "android:reconnect": "adb reverse tcp:8081 tcp:8081"
+    "android:reconnect": "adb reverse tcp:8081 tcp:8081",
+    "np": "np --no-tests --branch main"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -36,6 +37,7 @@
     "eslint": "^8.19.0",
     "jest": "^29.2.1",
     "metro-react-native-babel-preset": "0.73.7",
+    "np": "^7.6.3",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
     "redux-logger": "^3.0.6",
