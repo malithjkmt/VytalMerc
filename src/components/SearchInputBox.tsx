@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { commonStyles } from '../styles/commonStyles';
 import { Icons } from '../assets/images';
+import { theme } from '../styles/theme';
 
 interface SearchInputBoxProps {
   placeholder: string;
@@ -26,7 +27,7 @@ export const SearchInputBox: FC<SearchInputBoxProps> = ({
     onClear();
   };
 
-  const onSubmitEditing = ({ nativeEvent: { text } }) => {
+  const onSubmitEditing = ({ nativeEvent: { text } }: { nativeEvent: { text: string } }) => {
     if (text) {
       onSubmit && onSubmit(text);
     }
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#c9c9c9',
+    borderColor: theme.colors.searchInputBoxBorder,
     borderRadius: 30,
   },
   inputBox: {
@@ -89,11 +90,11 @@ const styles = StyleSheet.create({
   backIcon: {
     width: 10,
     height: 20,
-    tintColor: '#444',
+    tintColor: theme.colors.icon,
   },
   closeIcon: {
     width: 25,
     height: 25,
-    tintColor: '#444',
+    tintColor: theme.colors.icon,
   },
 });

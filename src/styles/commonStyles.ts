@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { theme } from './theme';
 
 export const commonStyles = StyleSheet.create({
   searchBox: {
@@ -20,5 +21,11 @@ export const commonStyles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1,
     elevation: 1,
+  },
+  errorMessageText: {
+    paddingHorizontal: 50,
+    textAlign: 'center',
+    marginTop: 20,
+    color: theme.colors.errorMessage,
   },
 });

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { theme } from '../styles/theme';
 
 interface HistoryItemProps {
   label: string;
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     height: 1,
-    backgroundColor: '#dedede',
+    backgroundColor: theme.colors.seperatorLine,
     marginHorizontal: 20,
   },
 });

@@ -19,6 +19,7 @@ import {
 import { SearchScreenProps } from '../../navigation/NavRouter';
 import { SearchInputBox, HistoryItem } from '../../components';
 import { commonStyles } from '../../styles/commonStyles';
+import { theme } from '../../styles/theme';
 
 const SearchScreen = ({ navigation }: SearchScreenProps) => {
   const dispatch = useAppDispatch();
@@ -76,7 +77,7 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
       </View>
 
       {errorMessage ? (
-        <Text style={styles.errorMessageText}>{errorMessage}</Text>
+        <Text style={commonStyles.errorMessageText}>{errorMessage}</Text>
       ) : searchHistory.length > 0 ? (
         <ScrollView
           style={styles.scrollView}
@@ -106,21 +107,15 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     marginBottom: 50,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.lightBackground,
     paddingBottom: 20,
   },
   sectionTitle: {
     marginLeft: 25,
     paddingTop: 15,
     paddingBottom: 5,
-    fontWeight: '600',
-    color: '#555',
-  },
-  errorMessageText: {
-    paddingHorizontal: 50,
-    textAlign: 'center',
-    marginTop: 20,
-    color: '#FF7878',
+    fontWeight: '700',
+    color: theme.colors.lowText,
   },
 });
 

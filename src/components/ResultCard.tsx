@@ -72,7 +72,6 @@ export const ResultCard: FC<ResultCardProps> = ({
         <Text style={styles.text}>
           {location.street}, {location.state}, {location.zip}
         </Text>
-
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.cuisinesRow}>
           {cuisines.map(i => (
             <View key={i} style={styles.cuisineTag}>
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginVertical: 4,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.cardBackground,
 
     // Shadow
     shadowOffset: { width: 0, height: 0 },
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   star: {
-    color: '#EEC373',
+    color: theme.colors.starRating,
   },
   cuisinesRow: {
     flexDirection: 'row',
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 30,
-    borderColor: '#999',
+    borderColor: theme.colors.tagBorder,
     borderWidth: 0.3,
     marginRight: 5,
   },
@@ -150,12 +149,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 5,
     borderRadius: 30,
-    borderColor: '#999',
+    borderColor: theme.colors.tagBorder,
     borderWidth: 0.3,
   },
   actionButtonText: {
     fontSize: 12,
     textAlign: 'center',
-    color: '#2659e0',
+    color: theme.colors.actionButtonText,
   },
 });

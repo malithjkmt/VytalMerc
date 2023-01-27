@@ -30,7 +30,9 @@ export const searchQuerySlice = createSlice({
 
 export const { setQuery, addToHistory, clearQuery } = searchQuerySlice.actions;
 
-export const selectCurrentSearchQuery = (state: RootState) => state.searchQuery.currentSearchQuery;
-export const selectSearchQueryHistory = (state: RootState) => state.searchQuery.searchQueryHistory;
+export const selectCurrentSearchQuery = (state: RootState): ParsedAddress | null =>
+  state.searchQuery.currentSearchQuery;
+export const selectSearchQueryHistory = (state: RootState): Array<ParsedAddress> =>
+  state.searchQuery.searchQueryHistory;
 
 export default searchQuerySlice.reducer;
