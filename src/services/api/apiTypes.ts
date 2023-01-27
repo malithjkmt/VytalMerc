@@ -1,35 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { REHYDRATE } from 'redux-persist';
+import { Shop, Rating, Address } from '../../utils/types';
 
-import { Shop, Rating, Address } from '../utils/types';
-
-export const dcomApi = createApi({
-  reducerPath: 'dcomApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://dcom-native-interview.s3.amazonaws.com/api/merchant/query/',
-  }),
-  extractRehydrationInfo(action, { reducerPath }) {
-    if (action.type === REHYDRATE) {
-      return action.payload[reducerPath];
-    }
-  },
-  endpoints: builder => ({
-    fetchMerchants: builder.query<any, string>({
-      query: address => address,
-      transformResponse: (res: ResponseDTO) => {
-        return res.merchants.map(shop => getShopFromShopDTO(shop));
-      },
-    }),
-  }),
-});
-
-// TODO: move these to src/services/api/types
-
-interface ResponseDTO {
+export interface ResponseDTO {
   merchants: ShopDTO[];
 }
 
-interface ShopDTO {
+export interface ShopDTO {
   id: number;
   name: string;
   logo_url: string;
@@ -40,23 +15,23 @@ interface ShopDTO {
   cuisines: string[];
 }
 
-interface linkDTO {
+export interface linkDTO {
   complete: string;
 }
 
-interface RatingDTO {
+export interface RatingDTO {
   overall_rating: number;
   star_rating: number;
   num_ratings: number;
 }
 
-interface AddressDTO {
+export interface AddressDTO {
   street: string;
   state: string;
   zip: string;
 }
 
-const getShopFromShopDTO = ({
+export const getShopFromShopDTO = ({
   id,
   name,
   logo_url,
@@ -93,5 +68,3 @@ const getRatingFromRatingDTO = ({
 const getAddressFromAddressDTO = ({ street, state, zip }: AddressDTO): Address => {
   return { street, state, zip };
 };
-
-export const { useFetchMerchantsQuery } = dcomApi;

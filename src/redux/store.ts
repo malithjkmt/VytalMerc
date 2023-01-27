@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 
-import { dcomApi } from './dcomApi';
+import { dcomApi } from '../services/api/dcomApi';
 import searchQueryReducer from './searchQuerySlice';
 
 const assembleMiddleware = () => {

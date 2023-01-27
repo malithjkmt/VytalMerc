@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, RefreshControl } from 'react-native';
 
 import { useAppSelector } from '../../redux/hooks';
-import { useFetchMerchantsQuery } from '../../redux/dcomApi';
+import { useFetchMerchantsQuery } from '../../services/api/dcomApi';
 import { selectCurrentSearchQuery } from '../../redux/searchQuerySlice';
 import { Shop } from '../../utils/types';
 
@@ -19,7 +19,6 @@ const ResultsScreen = ({ navigation }: ResultsScreenProps) => {
     skip: currentSearchQuery === null,
   });
 
-  console.log(res);
   const { data: shops, isError, error, isFetching, isLoading, refetch } = res;
 
   const renderRestaurantCard = ({ item }: { item: Shop }) => {
