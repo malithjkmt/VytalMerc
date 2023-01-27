@@ -18,6 +18,7 @@ import {
 
 import { SearchScreenProps } from '../../navigation/NavRouter';
 import { SearchInputBox, HistoryItem } from '../../components';
+import { commonStyles } from '../../styles/commonStyles';
 
 const SearchScreen = ({ navigation }: SearchScreenProps) => {
   const dispatch = useAppDispatch();
@@ -65,7 +66,7 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchBoxContainer}>
+      <View style={commonStyles.searchBoxContainer}>
         <SearchInputBox
           placeholder="Search Shop"
           defaultValue={currentSearchQuery?.addressText || ''}
@@ -75,7 +76,7 @@ const SearchScreen = ({ navigation }: SearchScreenProps) => {
       </View>
 
       {errorMessage ? (
-        <Text>{errorMessage}</Text>
+        <Text style={styles.errorMessageText}>{errorMessage}</Text>
       ) : (
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
           <Text style={styles.sectionTitle}>Recent Searches</Text>
@@ -92,16 +93,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  searchBoxContainer: {
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    paddingBottom: 10,
-    paddingHorizontal: 10,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
-    elevation: 1,
-  },
   scrollView: {
     flexGrow: 1,
     paddingTop: 10,
@@ -116,6 +107,12 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     fontWeight: '600',
     color: '#555',
+  },
+  errorMessageText: {
+    paddingHorizontal: 50,
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#FF7878',
   },
 });
 

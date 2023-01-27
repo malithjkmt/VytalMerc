@@ -6,12 +6,9 @@ import searchQueryReducer from './searchQuerySlice';
 
 const assembleMiddleware = () => {
   console.log('assembling middleware...');
-
-  const middleware = [];
+  const middleware = [dcomApi.middleware];
 
   if (__DEV__) {
-    middleware.push(dcomApi.middleware);
-
     /* ------------- Redux Logger Middleware ------------- */
     // Note: logger must be the last middleware in chain,
     // otherwise it will log thunk and promise, not actual actions.

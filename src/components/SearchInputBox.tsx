@@ -2,6 +2,8 @@ import React, { FC, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+import { commonStyles } from '../styles/commonStyles';
+
 interface SearchInputBoxProps {
   placeholder: string;
   defaultValue: string;
@@ -30,7 +32,7 @@ export const SearchInputBox: FC<SearchInputBoxProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.searchBox}>
       <TouchableOpacity style={styles.closeButton} onPress={navigation.goBack}>
         <Text>{'<'}</Text>
       </TouchableOpacity>
